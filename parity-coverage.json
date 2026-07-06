@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "globalPercent": 80,
+  "files": [
+    {
+      "path": "src/formatCurrency.ts",
+      "coveragePercent": 70,
+      "totalExecutableLines": 10,
+      "lines": [
+        {
+          "line": 1,
+          "coveredBy": [
+            "formatCurrency.test::coversPrimaryBehavior"
+          ]
+        },
+        {
+          "line": 2,
+          "coveredBy": [
+            "formatCurrency.test::coversPrimaryBehavior"
+          ]
+        },
+        {
+          "line": 3,
+          "coveredBy": [
+            "formatCurrency.test::coversPrimaryBehavior",
+            "formatCurrencyIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 4,
+          "coveredBy": [
+            "formatCurrency.test::coversPrimaryBehavior",
+            "formatCurrencyIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 5,
+          "coveredBy": [
+            "formatCurrencyIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 6,
+          "coveredBy": [
+            "formatCurrencyIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 7,
+          "coveredBy": [
+            "formatCurrencyIntegrationTest::coversThroughPublicWorkflow",
+            "formatCurrencySmokeTest::coversBootstrapPath"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/discount.ts",
+      "coveragePercent": 90,
+      "totalExecutableLines": 10,
+      "lines": [
+        {
+          "line": 1,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior"
+          ]
+        },
+        {
+          "line": 2,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior"
+          ]
+        },
+        {
+          "line": 3,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior",
+            "discountIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 4,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior",
+            "discountIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 5,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior",
+            "discountIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 6,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior",
+            "discountIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 7,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior",
+            "discountIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 8,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior",
+            "discountIntegrationTest::coversThroughPublicWorkflow"
+          ]
+        },
+        {
+          "line": 9,
+          "coveredBy": [
+            "discount.test::coversPrimaryBehavior",
+            "discountIntegrationTest::coversThroughPublicWorkflow",
+            "discountSmokeTest::coversBootstrapPath"
+          ]
+        }
+      ]
+    }
+  ]
+}
