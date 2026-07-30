@@ -1,8 +1,10 @@
-import { describe, expect, it } from 'vitest';
-import { applyDiscount } from '../src/discount';
+import assert from 'node:assert/strict'
+import test from 'node:test'
+import { applyDiscount } from '../src/discount.ts'
+import { addTax, applyFee } from '../src/formatCurrency.ts'
 
-describe('applyDiscount', () => {
-  it('applies the standard discount', () => {
-    expect(applyDiscount(100)).toBe(90);
-  });
-});
+test('applies the standard discount', () => {
+  const subtotal = applyFee(addTax(90, 0.1), 1)
+
+  assert.equal(applyDiscount(subtotal), 90)
+})

@@ -7,13 +7,19 @@ settings:
   test_extension: ".ts"
   namespace_separator: "."
 
-coverage_xml: parity-coverage.json
+coverage_xml: .parity/per-test
 min_coverage: 70
 min_coverage_global: 80
 min_matched_coverage: 40
 
+test:
+  command: "./node_modules/.bin/c8 --include='src/**/*.ts' --reporter=clover --reports-dir=$(dirname {coverage}) ./node_modules/.bin/tsx --test {test_abs}"
+  coverage: ".parity/tmp/{slug}/clover.xml"
+  reports: ".parity/per-test"
+  timeout: 300
+
 structure:
-  - name: "Vite Utilities"
+  - name: "TypeScript Utilities"
     paths:
       source: "src"
       test: "tests"

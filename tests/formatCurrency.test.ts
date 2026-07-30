@@ -1,6 +1,8 @@
-import { expect, test } from 'vitest'
-import { formatCurrency } from '../src/formatCurrency'
+import assert from 'node:assert/strict'
+import test from 'node:test'
+import { dollarsToCents, formatCurrency } from '../src/formatCurrency.ts'
 
-test('formats cents as dollars', () => {
-  expect(formatCurrency(1234)).toBe('$12.34')
+test('covers the core currency operations', () => {
+  assert.equal(formatCurrency(1234), '$12.34')
+  assert.equal(dollarsToCents(12.34), 1234)
 })

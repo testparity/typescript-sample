@@ -6,51 +6,49 @@
 
 [![Parity Sample](https://github.com/testparity/typescript-sample/actions/workflows/parity.yml/badge.svg)](https://github.com/testparity/typescript-sample/actions/workflows/parity.yml)
 
-This repository is a focused Parity demo for TypeScript. It intentionally separates aggregate file coverage from matching-test coverage, which is the core Parity use case.
+This repository is an end-to-end Parity demo for TypeScript and Node's native test runner. It runs the real `node:test` suite through `tsx`, generates one Clover report per test file, and lets Parity prove which test owns each utility.
 
 ## What this sample proves
 
-The checked-in language-neutral `parity-coverage.json` fixture contains per-line test attribution. Parity reads that attribution and reports both all-test file coverage and how much of each source file is covered by its matching test file.
+`formatCurrency.ts` reaches 80% when every test is combined, but `formatCurrency.test.ts` owns only 44%. `discount.test.ts` supplies the other coverage by using currency helpers inside its own scenario.
 
-| Source file | Matching test | All-test file coverage | Matching-test coverage | Other covering tests | Why it matters |
-| --- | --- | ---: | ---: | ---: | --- |
-| `src/formatCurrency.ts` | `tests/formatCurrency.test.ts` | 70% | 40% | 2 | Overall coverage looks acceptable, but most covered lines come from incidental tests. |
-| `src/discount.ts` | `tests/discount.test.ts` | 90% | 90% | 2 | The matching test owns nearly all of the file's coverage. |
-| Project total | - | 80% | - | - | Global coverage is healthy while one file still needs better direct tests. |
+| Source file | Belonging test | All tests | Belonging test | Attribution |
+| --- | --- | ---: | ---: | ---: |
+| `src/formatCurrency.ts` | `tests/formatCurrency.test.ts` | 80% | 44% | `2|1` |
+| `src/discount.ts` | `tests/discount.test.ts` | 100% | 100% | `1|0` |
+| Project total | - | 81.48% | - | - |
 
-Parity enforces these thresholds in `parity.yaml`:
+`coverage-attribution` uses `total covering tests|non-matching covering tests`. The `2|1` result exposes cross-test coverage that a normal aggregate percentage cannot.
 
-- `min_coverage_global: 80` proves the overall project can be at a release-ready level.
-- `minimum-coverage: 70` allows the intentionally weaker file to pass while still surfacing its exact percentage.
-- `matched-coverage: 40` proves Parity can distinguish the matching test from incidental coverage.
-- `coverage-attribution` is added automatically for the Parity JSON attribution fixture and reports the number of covering tests plus how many are non-matching.
+## How the proof works
+
+The matching currency test calls `formatCurrency` and `dollarsToCents`. The discount test also calls `addTax` and `applyFee`, while `clampCents` remains intentionally uncovered. `parity test` invokes each test file separately under `c8`, writes `.parity/per-test`, and runs `parity check` automatically.
 
 ## Run locally
 
-Install the public package from Packagist:
+Requirements: Node.js 24+, PHP 8.4+, and Composer.
 
 ```bash
-composer global require testparity/parity
+npm ci
+npm test
+npm run typecheck
+composer global require testparity/parity:^1.2
 ```
 
-Run the Parity proof:
+Generate fresh per-test evidence and check it:
+
+```bash
+parity test --config=parity.yaml --format=json
+```
+
+To inspect the same generated reports without rerunning Node:
 
 ```bash
 parity check --config=parity.yaml --format=json
 ```
 
-Expected highlights from the JSON output:
-
-- `formatCurrency.ts`: `minimum-coverage = 70%`, `matched-coverage = 40%`, `coverage-attribution = 3|2`.
-- `discount.ts`: `minimum-coverage = 90%`, `matched-coverage = 90%`, `coverage-attribution = 3|2`.
-- `global_coverage = 80` and `passed = true`.
+The expected result is `passed = true`, `global_coverage = 81.48`, and the file-level values shown above. No coverage fixture is committed.
 
 ## CI
 
-GitHub Actions installs `testparity/parity` from Packagist, runs any native sample test step for this ecosystem, and then runs:
-
-```bash
-parity check --config=parity.yaml --format=json
-```
-
-No private token is required.
+GitHub Actions installs locked npm dependencies, runs the complete Node test suite, installs public `testparity/parity:^1.2`, and executes `parity test`. The generated `.parity/per-test` directory and JSON result are uploaded as the `parity-per-test-evidence` artifact for 14 days. No private token is required.
